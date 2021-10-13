@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MarketWatch.Application\MarketWatch.Application.csproj" />
+    <ProjectReference Include="..\MarketWatch.DbMigrator\MarketWatch.DbMigrator.csproj" />
     <ProjectReference Include="..\MarketWatch.HttpApi\MarketWatch.HttpApi.csproj" />
     <ProjectReference Include="..\MarketWatch.EntityFrameworkCore\MarketWatch.EntityFrameworkCore.csproj" />
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="4.4.3" />
