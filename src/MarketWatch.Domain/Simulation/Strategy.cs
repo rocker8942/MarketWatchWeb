@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using Volo.Abp.Domain.Entities;
 
 #nullable disable
 
 namespace MarketWatch.Simulation
 {
-    public partial class Strategy
+    public class Strategy : AggregateRoot<long>
     {
-        public Strategy()
-        {
-            BacktestHistories = new HashSet<BacktestHistory>();
-        }
+        //public Strategy()
+        //{
+        //    BacktestHistories = new HashSet<BacktestHistory>();
+        //}
 
-        public long Id { get; set; }
         public decimal InvestTriggerRate { get; set; }
         public int AnalysisPeriod { get; set; }
         public int PortfolioNumber { get; set; }
@@ -31,5 +31,49 @@ namespace MarketWatch.Simulation
         public decimal? CoefficientAllowed { get; set; }
 
         public virtual ICollection<BacktestHistory> BacktestHistories { get; set; }
+
+        protected Strategy()
+        {
+        }
+
+        public Strategy(
+            long id,
+            decimal investTriggerRate,
+            int analysisPeriod,
+            int portfolioNumber,
+            int priceToUse,
+            decimal lossCutRate,
+            DateTime investDate,
+            int inUse,
+            decimal? ratePerInvesmentPeriod,
+            decimal? ratePerYear,
+            int daysToTest,
+            decimal? std,
+            DateTime? investStartDate,
+            string countryToInvest,
+            DateTime createdAt,
+            bool disabled,
+            decimal? coefficientAllowed,
+            ICollection<BacktestHistory> backtestHistories
+        ) : base(id)
+        {
+            InvestTriggerRate = investTriggerRate;
+            AnalysisPeriod = analysisPeriod;
+            PortfolioNumber = portfolioNumber;
+            PriceToUse = priceToUse;
+            LossCutRate = lossCutRate;
+            InvestDate = investDate;
+            InUse = inUse;
+            RatePerInvesmentPeriod = ratePerInvesmentPeriod;
+            RatePerYear = ratePerYear;
+            DaysToTest = daysToTest;
+            Std = std;
+            InvestStartDate = investStartDate;
+            CountryToInvest = countryToInvest;
+            CreatedAt = createdAt;
+            Disabled = disabled;
+            CoefficientAllowed = coefficientAllowed;
+            BacktestHistories = backtestHistories;
+        }
     }
 }

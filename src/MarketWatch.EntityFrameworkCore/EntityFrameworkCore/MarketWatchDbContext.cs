@@ -1,4 +1,4 @@
-﻿using MarketWatch.Simulation;
+using MarketWatch.Simulation;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -13,6 +13,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace MarketWatch.EntityFrameworkCore
 {
@@ -66,6 +67,7 @@ namespace MarketWatch.EntityFrameworkCore
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
         #endregion
+        // public DbSet<Strategy> Strategies { get; set; }
         
         public MarketWatchDbContext(DbContextOptions<MarketWatchDbContext> options)
             : base(options)
@@ -114,7 +116,7 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasColumnName("rate");
             });
 
-                        builder.Entity<BacktestHistory>(entity =>
+            builder.Entity<BacktestHistory>(entity =>
             {
                 entity.ToTable("backtestHistory");
 
@@ -422,6 +424,8 @@ namespace MarketWatch.EntityFrameworkCore
                 entity.Property(e => e.Std)
                     .HasColumnType("decimal(18, 4)")
                     .HasColumnName("std");
+
+                entity.ConfigureByConvention();
             });
 
             builder.Entity<TblFundTradeHistory>(entity =>
@@ -501,6 +505,17 @@ namespace MarketWatch.EntityFrameworkCore
                 entity.Property(e => e.Tbond)
                     .HasColumnType("decimal(18, 2)")
                     .HasColumnName("TBond");
+            });
+
+
+
+            builder.Entity<BacktestHistory>(b =>
+            {
+                b.ToTable(MarketWatchConsts.DbTablePrefix + "BacktestHistory", MarketWatchConsts.DbSchema);
+                b.ConfigureByConvention(); 
+                
+
+                /* Configure more properties here */
             });
         }
     }

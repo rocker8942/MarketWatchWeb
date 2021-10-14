@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
+using MarketWatch.Permissions;
 using MarketWatch.Localization;
 using MarketWatch.MultiTenancy;
 using Volo.Abp.Identity.Web.Navigation;
@@ -45,6 +46,18 @@ namespace MarketWatch.Web.Menus
 
             administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
             administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+            if (await context.IsGrantedAsync(MarketWatchPermissions.Strategy.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(MarketWatchMenus.Strategy, l["Menu:Strategy"], "/Simulation/Strategy")
+                );
+            }
+            if (await context.IsGrantedAsync(MarketWatchPermissions.BacktestHistory.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(MarketWatchMenus.BacktestHistory, l["Menu:BacktestHistory"], "/Simulation/BacktestHistory")
+                );
+            }
         }
     }
 }

@@ -1,1 +1,0 @@
-﻿Scaffold-DbContext "Server=localhost;Database=marketwatch_Prod;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -ContextDir DbContext -Context MarketWatchContext -OutputDir Models -force
