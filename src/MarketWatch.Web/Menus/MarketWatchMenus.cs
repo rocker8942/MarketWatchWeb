@@ -1,4 +1,4 @@
-﻿namespace MarketWatch.Web.Menus
+namespace MarketWatch.Web.Menus
 {
     public class MarketWatchMenus
     {
@@ -7,5 +7,7 @@
 
         //Add your menu items here...
 
+        public const string Strategy = Prefix + ".Strategy";
+        public const string BacktestHistory = Prefix + ".BacktestHistory";
     }
 }

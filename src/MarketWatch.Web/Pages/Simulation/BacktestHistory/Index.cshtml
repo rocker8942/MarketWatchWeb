@@ -1,0 +1,48 @@
+@page
+@using MarketWatch.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using MarketWatch.Web.Pages.Simulation.BacktestHistory
+@using MarketWatch.Localization
+@using MarketWatch.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<MarketWatchResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["BacktestHistory"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:BacktestHistory"].Value);
+    PageLayout.Content.MenuItemName = MarketWatchMenus.BacktestHistory;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Simulation/BacktestHistory/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Simulation/BacktestHistory/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["BacktestHistory"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+			    @if (await Authorization.IsGrantedAsync(MarketWatchPermissions.BacktestHistory.Create))
+                {
+                <abp-button id="NewBacktestHistoryButton"
+                            text="@L["CreateBacktestHistory"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="BacktestHistoryTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

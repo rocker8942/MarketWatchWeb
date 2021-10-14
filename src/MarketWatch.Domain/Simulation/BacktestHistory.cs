@@ -1,12 +1,12 @@
-﻿using System;
+using System;
+using Volo.Abp.Domain.Entities;
 
 #nullable disable
 
 namespace MarketWatch.Simulation
 {
-    public partial class BacktestHistory
+    public class BacktestHistory : Entity<long>
     {
-        public long Id { get; set; }
         public string MainLeader { get; set; }
         public decimal LeaderChange { get; set; }
         public decimal BuyPrice { get; set; }
@@ -19,5 +19,37 @@ namespace MarketWatch.Simulation
         public int? SellType { get; set; }
 
         public virtual Strategy Strategy { get; set; }
+
+        protected BacktestHistory()
+        {
+        }
+
+        public BacktestHistory(
+            long id,
+            string mainLeader,
+            decimal leaderChange,
+            decimal buyPrice,
+            decimal sellPrice,
+            DateTime tradeDate,
+            decimal rateOfReturn,
+            long strategyId,
+            string followStock,
+            decimal? nav,
+            int? sellType,
+            Strategy strategy
+        ) : base(id)
+        {
+            MainLeader = mainLeader;
+            LeaderChange = leaderChange;
+            BuyPrice = buyPrice;
+            SellPrice = sellPrice;
+            TradeDate = tradeDate;
+            RateOfReturn = rateOfReturn;
+            StrategyId = strategyId;
+            FollowStock = followStock;
+            Nav = nav;
+            SellType = sellType;
+            Strategy = strategy;
+        }
     }
 }
