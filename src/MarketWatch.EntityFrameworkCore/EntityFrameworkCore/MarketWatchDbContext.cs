@@ -511,7 +511,7 @@ namespace MarketWatch.EntityFrameworkCore
 
             builder.Entity<BacktestHistory>(b =>
             {
-                b.ToTable(MarketWatchConsts.DbTablePrefix + "BacktestHistory", MarketWatchConsts.DbSchema);
+                b.ToTable(MarketWatchConsts.DbTablePrefix + "backtestHistory", MarketWatchConsts.DbSchema);
                 b.ConfigureByConvention(); 
                 
 
