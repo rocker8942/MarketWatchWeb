@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Volo.Abp.Domain.Entities;
 
 #nullable disable
 
 namespace MarketWatch.Simulation
 {
-    public partial class StockInfo
+    public class StockInfo
     {
         public StockInfo()
         {

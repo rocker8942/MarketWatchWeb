@@ -369,6 +369,12 @@ namespace MarketWatch.Migrations
                     b.Property<decimal?>("CoefficientAllowed")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
                     b.Property<int?>("CountryToInvest")
                         .HasColumnType("int");
 
@@ -383,6 +389,10 @@ namespace MarketWatch.Migrations
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
 
                     b.Property<int>("InUse")
                         .HasColumnType("int")

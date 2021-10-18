@@ -22,5 +22,21 @@ namespace MarketWatch.Permissions
             public const string Create = Default + ".Create";
             public const string Delete = Default + ".Delete";
         }
+
+        public class FundTradeHistory
+        {
+            public const string Default = GroupName + ".FundTradeHistory";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
+
+        public class FundStrategy
+        {
+            public const string Default = GroupName + ".FundStrategy";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
     }
 }

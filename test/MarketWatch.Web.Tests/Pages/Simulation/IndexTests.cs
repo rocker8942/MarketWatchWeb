@@ -14,7 +14,7 @@ namespace MarketWatch.Pages.Simulation
             // Arrange
 
             // Act
-            var response = await GetResponseAsStringAsync("/BacktestHistory");
+            var response = await GetResponseAsStringAsync("/FundStrategy");
 
             // Assert
             response.ShouldNotBeNull();

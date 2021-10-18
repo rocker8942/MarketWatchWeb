@@ -108,10 +108,10 @@ $(function () {
                 title: l('StrategyCoefficientAllowed'),
                 data: "coefficientAllowed"
             },
-            {
-                title: l('StrategyBacktestHistories'),
-                data: "backtestHistories"
-            },
+            //{
+            //    title: l('StrategyBacktestHistories'),
+            //    data: "backtestHistories"
+            //},
         ]
     }));
 
