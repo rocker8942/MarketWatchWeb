@@ -2,11 +2,11 @@ $(function () {
 
     var l = abp.localization.getResource('MarketWatch');
 
-    var service = marketWatch.simulation.strategy;
-    var createModal = new abp.ModalManager(abp.appPath + 'Simulation/Strategy/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Simulation/Strategy/EditModal');
+    var service = marketWatch.simulation.fundStrategy;
+    var createModal = new abp.ModalManager(abp.appPath + 'Simulation/FundStrategy/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Simulation/FundStrategy/EditModal');
 
-    var dataTable = $('#StrategyTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+    var dataTable = $('#FundStrategyTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
         serverSide: true,
         paging: true,
@@ -22,16 +22,16 @@ $(function () {
                         [
                             {
                                 text: l('Edit'),
-                                visible: abp.auth.isGranted('MarketWatch.Strategy.Update'),
+                                visible: abp.auth.isGranted('MarketWatch.FundStrategy.Update'),
                                 action: function (data) {
                                     editModal.open({ id: data.record.id });
                                 }
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted('MarketWatch.Strategy.Delete'),
+                                visible: abp.auth.isGranted('MarketWatch.FundStrategy.Delete'),
                                 confirmMessage: function (data) {
-                                    return l('StrategyDeletionConfirmationMessage', data.record.id);
+                                    return l('FundStrategyDeletionConfirmationMessage', data.record.id);
                                 },
                                 action: function (data) {
                                     service.delete(data.record.id)
@@ -45,73 +45,77 @@ $(function () {
                 }
             },
             {
-                title: l('StrategyInvestTriggerRate'),
+                title: l('FundStrategyName'),
+                data: "name"
+            },
+            {
+                title: l('FundStrategyInvestTriggerRate'),
                 data: "investTriggerRate"
             },
             {
-                title: l('StrategyAnalysisPeriod'),
+                title: l('FundStrategyAnalysisPeriod'),
                 data: "analysisPeriod"
             },
             {
-                title: l('StrategyPortfolioNumber'),
+                title: l('FundStrategyPortfolioNumber'),
                 data: "portfolioNumber"
             },
             {
-                title: l('StrategyPriceToUse'),
+                title: l('FundStrategyPriceToUse'),
                 data: "priceToUse"
             },
             {
-                title: l('StrategyLossCutRate'),
+                title: l('FundStrategyLossCutRate'),
                 data: "lossCutRate"
             },
             {
-                title: l('StrategyInvestDate'),
+                title: l('FundStrategyInvestDate'),
                 data: "investDate"
             },
             {
-                title: l('StrategyInUse'),
+                title: l('FundStrategyInUse'),
                 data: "inUse"
             },
             {
-                title: l('StrategyRatePerInvesmentPeriod'),
+                title: l('FundStrategyRatePerInvesmentPeriod'),
                 data: "ratePerInvesmentPeriod"
             },
             {
-                title: l('StrategyRatePerYear'),
+                title: l('FundStrategyRatePerYear'),
                 data: "ratePerYear"
             },
             {
-                title: l('StrategyDaysToTest'),
+                title: l('FundStrategyDaysToTest'),
                 data: "daysToTest"
             },
             {
-                title: l('StrategyStd'),
+                title: l('FundStrategyStd'),
                 data: "std"
             },
             {
-                title: l('StrategyInvestStartDate'),
+                title: l('FundStrategyInvestStartDate'),
                 data: "investStartDate"
             },
             {
-                title: l('StrategyCountryToInvest'),
-                data: "countryToInvest"
-            },
-            {
-                title: l('StrategyCreatedAt'),
+                title: l('FundStrategyCreatedAt'),
                 data: "createdAt"
             },
             {
-                title: l('StrategyDisabled'),
+                title: l('FundStrategyDisabled'),
                 data: "disabled"
             },
             {
-                title: l('StrategyCoefficientAllowed'),
+                title: l('FundStrategyCountryToInvest'),
+                data: "countryToInvest"
+            },
+            {
+                title: l('FundStrategyCoefficientAllowed'),
                 data: "coefficientAllowed"
             },
-            //{
-            //    title: l('StrategyBacktestHistories'),
-            //    data: "backtestHistories"
-            //},
+            {
+                title: l('FundStrategyFundTradeHistory'),
+                data: "fundTradeHistory"
+            },
         ]
     }));
 
@@ -123,7 +127,7 @@ $(function () {
         dataTable.ajax.reload();
     });
 
-    $('#NewStrategyButton').click(function (e) {
+    $('#NewFundStrategyButton').click(function (e) {
         e.preventDefault();
         createModal.open();
     });

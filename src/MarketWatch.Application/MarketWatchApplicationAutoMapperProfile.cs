@@ -17,6 +17,8 @@ namespace MarketWatch
             CreateMap<CreateUpdateBacktestHistoryDto, BacktestHistory>(MemberList.Source);
             CreateMap<FundTradeHistory, FundTradeHistoryDto>();
             CreateMap<CreateUpdateFundTradeHistoryDto, FundTradeHistory>(MemberList.Source);
+            CreateMap<FundStrategy, FundStrategyDto>();
+            CreateMap<CreateUpdateFundStrategyDto, FundStrategy>(MemberList.Source);
         }
     }
 }

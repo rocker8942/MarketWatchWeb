@@ -383,7 +383,7 @@ namespace MarketWatch.EntityFrameworkCore
 
             builder.Entity<FundStrategy>(entity =>
             {
-                entity.ToTable("tblFundStrategy");
+                entity.ToTable(MarketWatchConsts.DbTablePrefix + "FundStrategy", MarketWatchConsts.DbSchema);
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -502,7 +502,6 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasColumnType("decimal(18, 2)")
                     .HasColumnName("TBond");
             });
-
         }
     }
 }
