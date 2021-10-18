@@ -21,6 +21,11 @@ namespace MarketWatch.Permissions
             backtestHistoryPermission.AddChild(MarketWatchPermissions.BacktestHistory.Create, L("Permission:Create"));
             backtestHistoryPermission.AddChild(MarketWatchPermissions.BacktestHistory.Update, L("Permission:Update"));
             backtestHistoryPermission.AddChild(MarketWatchPermissions.BacktestHistory.Delete, L("Permission:Delete"));
+
+            var fundTradeHistoryPermission = myGroup.AddPermission(MarketWatchPermissions.FundTradeHistory.Default, L("Permission:FundTradeHistory"));
+            fundTradeHistoryPermission.AddChild(MarketWatchPermissions.FundTradeHistory.Create, L("Permission:Create"));
+            fundTradeHistoryPermission.AddChild(MarketWatchPermissions.FundTradeHistory.Update, L("Permission:Update"));
+            fundTradeHistoryPermission.AddChild(MarketWatchPermissions.FundTradeHistory.Delete, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

@@ -47,6 +47,24 @@
     "BacktestHistoryStrategy": "BacktestHistoryStrategy",
     "CreateBacktestHistory": "CreateBacktestHistory",
     "EditBacktestHistory": "EditBacktestHistory",
-    "BacktestHistoryDeletionConfirmationMessage": "Are you sure to delete the backtestHistory {0}?"
+    "BacktestHistoryDeletionConfirmationMessage": "Are you sure to delete the backtestHistory {0}?",
+    "Permission:FundTradeHistory": "FundTradeHistory",
+    "Menu:FundTradeHistory": "MenuFundTradeHistory",
+    "FundTradeHistory": "FundTradeHistory",
+    "FundTradeHistoryMainLeader": "FundTradeHistoryMainLeader",
+    "FundTradeHistoryLeaderChange": "FundTradeHistoryLeaderChange",
+    "FundTradeHistoryBuyPrice": "FundTradeHistoryBuyPrice",
+    "FundTradeHistorySellPrice": "FundTradeHistorySellPrice",
+    "FundTradeHistoryTradeDate": "FundTradeHistoryTradeDate",
+    "FundTradeHistoryRateOfReturn": "FundTradeHistoryRateOfReturn",
+    "FundTradeHistoryStrategyId": "FundTradeHistoryStrategyId",
+    "FundTradeHistoryFollowStock": "FundTradeHistoryFollowStock",
+    "FundTradeHistoryNav": "FundTradeHistoryNav",
+    "FundTradeHistorySellType": "FundTradeHistorySellType",
+    "FundTradeHistoryCoefficient": "FundTradeHistoryCoefficient",
+    "FundTradeHistoryStrategy": "FundTradeHistoryStrategy",
+    "CreateFundTradeHistory": "CreateFundTradeHistory",
+    "EditFundTradeHistory": "EditFundTradeHistory",
+    "FundTradeHistoryDeletionConfirmationMessage": "Are you sure to delete the fundTradeHistory {0}?"
   }
 }

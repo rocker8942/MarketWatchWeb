@@ -58,6 +58,12 @@ namespace MarketWatch.Web.Menus
                     new ApplicationMenuItem(MarketWatchMenus.BacktestHistory, l["Menu:BacktestHistory"], "/Simulation/BacktestHistory")
                 );
             }
+            if (await context.IsGrantedAsync(MarketWatchPermissions.FundTradeHistory.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(MarketWatchMenus.FundTradeHistory, l["Menu:FundTradeHistory"], "/Simulation/FundTradeHistory")
+                );
+            }
         }
     }
 }

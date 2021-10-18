@@ -42,6 +42,7 @@ namespace MarketWatch.EntityFrameworkCore
                 options.AddDefaultRepositories(includeAllEntities: true);
                 options.AddRepository<Strategy, StrategyRepository>();
                 options.AddRepository<BacktestHistory, BacktestHistoryRepository>();
+                options.AddRepository<FundTradeHistory, FundTradeHistoryRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

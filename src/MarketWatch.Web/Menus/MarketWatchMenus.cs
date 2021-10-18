@@ -9,5 +9,6 @@ namespace MarketWatch.Web.Menus
 
         public const string Strategy = Prefix + ".Strategy";
         public const string BacktestHistory = Prefix + ".BacktestHistory";
+        public const string FundTradeHistory = Prefix + ".FundTradeHistory";
     }
 }

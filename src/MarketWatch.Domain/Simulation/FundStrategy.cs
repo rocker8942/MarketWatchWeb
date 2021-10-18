@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Volo.Abp.Domain.Entities;
 
 #nullable disable
 
 namespace MarketWatch.Simulation
 {
-    public partial class TblFundStrategy
+    public class FundStrategy : AggregateRoot<long>
     {
-        public TblFundStrategy()
+        public FundStrategy()
         {
-            TblFundTradeHistories = new HashSet<TblFundTradeHistory>();
+            FundTradeHistory = new HashSet<FundTradeHistory>();
         }
 
-        public long Id { get; set; }
         public decimal InvestTriggerRate { get; set; }
         public int AnalysisPeriod { get; set; }
         public int PortfolioNumber { get; set; }
@@ -31,6 +31,6 @@ namespace MarketWatch.Simulation
         public int? CountryToInvest { get; set; }
         public decimal? CoefficientAllowed { get; set; }
 
-        public virtual ICollection<TblFundTradeHistory> TblFundTradeHistories { get; set; }
+        public virtual ICollection<FundTradeHistory> FundTradeHistory { get; set; }
     }
 }

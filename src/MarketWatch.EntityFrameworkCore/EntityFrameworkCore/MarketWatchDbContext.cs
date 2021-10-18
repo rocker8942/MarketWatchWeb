@@ -35,8 +35,8 @@ namespace MarketWatch.EntityFrameworkCore
         public virtual DbSet<StockPrice> StockPrices { get; set; }
         public virtual DbSet<StockToAnalysis> StockToAnalyses { get; set; }
         public virtual DbSet<Strategy> Strategies { get; set; }
-        public virtual DbSet<TblFundStrategy> TblFundStrategies { get; set; }
-        public virtual DbSet<TblFundTradeHistory> TblFundTradeHistories { get; set; }
+        public virtual DbSet<FundStrategy> FundStrategies { get; set; }
+        public virtual DbSet<FundTradeHistory> FundTradeHistories { get; set; }
         public virtual DbSet<VwStockToAnalysis> VwStockToAnalyses { get; set; }
 
 
@@ -67,7 +67,6 @@ namespace MarketWatch.EntityFrameworkCore
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
         #endregion
-        // public DbSet<Strategy> Strategies { get; set; }
         
         public MarketWatchDbContext(DbContextOptions<MarketWatchDbContext> options)
             : base(options)
@@ -91,13 +90,6 @@ namespace MarketWatch.EntityFrameworkCore
             builder.ConfigureTenantManagement();
 
             /* Configure your own tables/entities inside here */
-
-            //builder.Entity<YourEntity>(b =>
-            //{
-            //    b.ToTable(MarketWatchConsts.DbTablePrefix + "YourEntities", MarketWatchConsts.DbSchema);
-            //    b.ConfigureByConvention(); //auto configure for the base class props
-            //    //...
-            //});
 
             builder.Entity<AnalysisDayInvestDayDiff>(entity =>
             {
@@ -164,6 +156,8 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasForeignKey(d => d.StrategyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_backtestHistory_strategy");
+
+                entity.ConfigureByConvention(); 
             });
 
             builder.Entity<CoefficientPair>(entity =>
@@ -217,7 +211,7 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasMaxLength(255);
             });
 
-                        builder.Entity<StockInfo>(entity =>
+            builder.Entity<StockInfo>(entity =>
             {
                 entity.HasKey(e => e.Code);
 
@@ -387,7 +381,7 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasColumnName("std");
             });
 
-            builder.Entity<TblFundStrategy>(entity =>
+            builder.Entity<FundStrategy>(entity =>
             {
                 entity.ToTable("tblFundStrategy");
 
@@ -428,9 +422,9 @@ namespace MarketWatch.EntityFrameworkCore
                 entity.ConfigureByConvention();
             });
 
-            builder.Entity<TblFundTradeHistory>(entity =>
+            builder.Entity<FundTradeHistory>(entity =>
             {
-                entity.ToTable("tblFundTradeHistory");
+                entity.ToTable(MarketWatchConsts.DbTablePrefix + "FundTradeHistory", MarketWatchConsts.DbSchema);
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -476,10 +470,12 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasColumnName("tradeDate");
 
                 entity.HasOne(d => d.Strategy)
-                    .WithMany(p => p.TblFundTradeHistories)
+                    .WithMany(p => p.FundTradeHistory)
                     .HasForeignKey(d => d.StrategyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tblFundTradeHistory_tblFundStrategy");
+
+                entity.ConfigureByConvention(); 
             });
 
             builder.Entity<VwStockToAnalysis>(entity =>
@@ -507,16 +503,6 @@ namespace MarketWatch.EntityFrameworkCore
                     .HasColumnName("TBond");
             });
 
-
-
-            builder.Entity<BacktestHistory>(b =>
-            {
-                b.ToTable(MarketWatchConsts.DbTablePrefix + "backtestHistory", MarketWatchConsts.DbSchema);
-                b.ConfigureByConvention(); 
-                
-
-                /* Configure more properties here */
-            });
         }
     }
 }
