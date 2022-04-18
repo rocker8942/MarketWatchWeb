@@ -26,7 +26,7 @@ namespace MarketWatch.HttpApi.Client.ConsoleTestApp
                 application.Initialize();
 
                 var demo = application.ServiceProvider.GetRequiredService<ClientDemoService>();
-                await demo.RunAsync();
+                // await demo.RunAsync();
 
                 application.Shutdown();
             }

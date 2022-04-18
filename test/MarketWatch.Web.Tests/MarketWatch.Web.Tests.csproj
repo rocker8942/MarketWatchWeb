@@ -3,7 +3,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <RootNamespace>MarketWatch</RootNamespace>
@@ -14,11 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.32" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
     <ProjectReference Include="..\MarketWatch.Application.Tests\MarketWatch.Application.Tests.csproj" />
     <ProjectReference Include="..\..\src\MarketWatch.Web\MarketWatch.Web.csproj" />
-    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="4.4.3" />
+    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="5.1.4" />
   </ItemGroup>
 
   <ItemGroup>
