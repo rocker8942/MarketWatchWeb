@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
+#nullable disable
+
 namespace MarketWatch.Migrations
 {
     [DbContext(typeof(MarketWatchDbContext))]
@@ -17,9 +19,10 @@ namespace MarketWatch.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("MarketWatch.Simulation.AnalysisDayInvestDayDiff", b =>
                 {
@@ -50,8 +53,9 @@ namespace MarketWatch.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<decimal>("BuyPrice")
                         .HasColumnType("decimal(18,2)")
@@ -100,7 +104,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("StrategyId");
 
-                    b.ToTable("backtestHistory");
+                    b.ToTable("backtestHistory", (string)null);
                 });
 
             modelBuilder.Entity("MarketWatch.Simulation.CoefficientPair", b =>
@@ -133,234 +137,17 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("CodeY");
 
-                    b.ToTable("coefficient_pair");
+                    b.ToTable("coefficient_pair", (string)null);
                 });
 
-            modelBuilder.Entity("MarketWatch.Simulation.RefSellType", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.ToTable("refSellType");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.StockInfo", b =>
-                {
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("code");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("country");
-
-                    b.Property<DateTime?>("DateIncluded")
-                        .HasColumnType("datetime")
-                        .HasColumnName("dateIncluded");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit")
-                        .HasColumnName("enabled");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("modifiedAt");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Code");
-
-                    b.ToTable("stockInfo");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.StockPrice", b =>
-                {
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("code");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime")
-                        .HasColumnName("date");
-
-                    b.Property<decimal?>("AdjClosePrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("adjClosePrice");
-
-                    b.Property<decimal?>("ClosePrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("closePrice");
-
-                    b.Property<decimal>("CurrentPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("currentPrice");
-
-                    b.Property<decimal?>("HighPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("highPrice");
-
-                    b.Property<decimal?>("LowPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("lowPrice");
-
-                    b.Property<decimal?>("OpenPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("openPrice");
-
-                    b.Property<decimal?>("Volume")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("volume");
-
-                    b.HasKey("Code", "Date");
-
-                    b.ToTable("stockPrice");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.StockToAnalysis", b =>
-                {
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("code");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime")
-                        .HasColumnName("date");
-
-                    b.Property<decimal>("AdjClosePrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("adjClosePrice");
-
-                    b.Property<decimal>("Change")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("change");
-
-                    b.Property<decimal>("ClosePrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("closePrice");
-
-                    b.Property<decimal>("CurrentPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("currentPrice");
-
-                    b.Property<decimal>("HighPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("highPrice");
-
-                    b.Property<decimal>("LowPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("lowPrice");
-
-                    b.Property<decimal>("OpenPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("openPrice");
-
-                    b.Property<decimal>("Volume")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("volume");
-
-                    b.HasKey("Code", "Date");
-
-                    b.ToTable("stockToAnalysis");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.Strategy", b =>
+            modelBuilder.Entity("MarketWatch.Simulation.FundStrategy", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("id");
 
-                    b.Property<int>("AnalysisPeriod")
-                        .HasColumnType("int")
-                        .HasColumnName("analysisPeriod");
-
-                    b.Property<decimal?>("CoefficientAllowed")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<string>("CountryToInvest")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(((2000)-(1))-(1))");
-
-                    b.Property<int>("DaysToTest")
-                        .HasColumnType("int")
-                        .HasColumnName("daysToTest");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ExtraProperties")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<int>("InUse")
-                        .HasColumnType("int")
-                        .HasColumnName("inUse");
-
-                    b.Property<DateTime>("InvestDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("InvestStartDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<decimal>("InvestTriggerRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("LossCutRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PortfolioNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PriceToUse")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("RatePerInvesmentPeriod")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<decimal?>("RatePerYear")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("ratePerYear");
-
-                    b.Property<decimal?>("Std")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("std");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("strategy");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.TblFundStrategy", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<int>("AnalysisPeriod")
                         .HasColumnType("int")
@@ -433,16 +220,17 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblFundStrategy");
+                    b.ToTable("tblFundStrategy", (string)null);
                 });
 
-            modelBuilder.Entity("MarketWatch.Simulation.TblFundTradeHistory", b =>
+            modelBuilder.Entity("MarketWatch.Simulation.FundTradeHistory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<decimal>("BuyPrice")
                         .HasColumnType("decimal(18,2)")
@@ -495,7 +283,226 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("StrategyId");
 
-                    b.ToTable("tblFundTradeHistory");
+                    b.ToTable("tblFundTradeHistory", (string)null);
+                });
+
+            modelBuilder.Entity("MarketWatch.Simulation.RefSellType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.ToTable("refSellType", (string)null);
+                });
+
+            modelBuilder.Entity("MarketWatch.Simulation.StockInfo", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("country");
+
+                    b.Property<DateTime?>("DateIncluded")
+                        .HasColumnType("datetime")
+                        .HasColumnName("dateIncluded");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit")
+                        .HasColumnName("enabled");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("modifiedAt");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("stockInfo", (string)null);
+                });
+
+            modelBuilder.Entity("MarketWatch.Simulation.StockPrice", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("code");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime")
+                        .HasColumnName("date");
+
+                    b.Property<decimal?>("AdjClosePrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("adjClosePrice");
+
+                    b.Property<decimal?>("ClosePrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("closePrice");
+
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("currentPrice");
+
+                    b.Property<decimal?>("HighPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("highPrice");
+
+                    b.Property<decimal?>("LowPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("lowPrice");
+
+                    b.Property<decimal?>("OpenPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("openPrice");
+
+                    b.Property<decimal?>("Volume")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("volume");
+
+                    b.HasKey("Code", "Date");
+
+                    b.ToTable("stockPrice", (string)null);
+                });
+
+            modelBuilder.Entity("MarketWatch.Simulation.StockToAnalysis", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("code");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime")
+                        .HasColumnName("date");
+
+                    b.Property<decimal>("AdjClosePrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("adjClosePrice");
+
+                    b.Property<decimal>("Change")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("change");
+
+                    b.Property<decimal>("ClosePrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("closePrice");
+
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("currentPrice");
+
+                    b.Property<decimal>("HighPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("highPrice");
+
+                    b.Property<decimal>("LowPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("lowPrice");
+
+                    b.Property<decimal>("OpenPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("openPrice");
+
+                    b.Property<decimal>("Volume")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("volume");
+
+                    b.HasKey("Code", "Date");
+
+                    b.ToTable("stockToAnalysis", (string)null);
+                });
+
+            modelBuilder.Entity("MarketWatch.Simulation.Strategy", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("AnalysisPeriod")
+                        .HasColumnType("int")
+                        .HasColumnName("analysisPeriod");
+
+                    b.Property<decimal?>("CoefficientAllowed")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<string>("CountryToInvest")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(((2000)-(1))-(1))");
+
+                    b.Property<int>("DaysToTest")
+                        .HasColumnType("int")
+                        .HasColumnName("daysToTest");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<int>("InUse")
+                        .HasColumnType("int")
+                        .HasColumnName("inUse");
+
+                    b.Property<DateTime>("InvestDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("InvestStartDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<decimal>("InvestTriggerRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LossCutRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("PortfolioNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriceToUse")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("RatePerInvesmentPeriod")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal?>("RatePerYear")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("ratePerYear");
+
+                    b.Property<decimal?>("Std")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("std");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("strategy", (string)null);
                 });
 
             modelBuilder.Entity("MarketWatch.Simulation.VwStockToAnalysis", b =>
@@ -598,16 +605,28 @@ namespace MarketWatch.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ImpersonatorTenantId");
 
+                    b.Property<string>("ImpersonatorTenantName")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnName("ImpersonatorTenantName");
+
                     b.Property<Guid?>("ImpersonatorUserId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ImpersonatorUserId");
+
+                    b.Property<string>("ImpersonatorUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("ImpersonatorUserName");
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("TenantId");
 
                     b.Property<string>("TenantName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnName("TenantName");
 
                     b.Property<string>("Url")
                         .HasMaxLength(256)
@@ -629,7 +648,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("TenantId", "UserId", "ExecutionTime");
 
-                    b.ToTable("AbpAuditLogs");
+                    b.ToTable("AbpAuditLogs", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -679,7 +698,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("TenantId", "ServiceName", "MethodName", "ExecutionTime");
 
-                    b.ToTable("AbpAuditLogActions");
+                    b.ToTable("AbpAuditLogActions", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.EntityChange", b =>
@@ -729,7 +748,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("TenantId", "EntityTypeFullName", "EntityId");
 
-                    b.ToTable("AbpEntityChanges");
+                    b.ToTable("AbpEntityChanges", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.EntityPropertyChange", b =>
@@ -771,7 +790,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("EntityChangeId");
 
-                    b.ToTable("AbpEntityPropertyChanges");
+                    b.ToTable("AbpEntityPropertyChanges", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.BackgroundJobs.BackgroundJobRecord", b =>
@@ -829,7 +848,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("IsAbandoned", "NextTryTime");
 
-                    b.ToTable("AbpBackgroundJobs");
+                    b.ToTable("AbpBackgroundJobs", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.FeatureManagement.FeatureValue", b =>
@@ -858,9 +877,11 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "ProviderName", "ProviderKey");
+                    b.HasIndex("Name", "ProviderName", "ProviderKey")
+                        .IsUnique()
+                        .HasFilter("[ProviderName] IS NOT NULL AND [ProviderKey] IS NOT NULL");
 
-                    b.ToTable("AbpFeatureValues");
+                    b.ToTable("AbpFeatureValues", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityClaimType", b =>
@@ -906,7 +927,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpClaimTypes");
+                    b.ToTable("AbpClaimTypes", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityLinkUser", b =>
@@ -932,7 +953,7 @@ namespace MarketWatch.Migrations
                         .IsUnique()
                         .HasFilter("[SourceTenantId] IS NOT NULL AND [TargetTenantId] IS NOT NULL");
 
-                    b.ToTable("AbpLinkUsers");
+                    b.ToTable("AbpLinkUsers", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRole", b =>
@@ -980,7 +1001,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("NormalizedName");
 
-                    b.ToTable("AbpRoles");
+                    b.ToTable("AbpRoles", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRoleClaim", b =>
@@ -1008,7 +1029,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AbpRoleClaims");
+                    b.ToTable("AbpRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentitySecurityLog", b =>
@@ -1082,7 +1103,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AbpSecurityLogs");
+                    b.ToTable("AbpSecurityLogs", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUser", b =>
@@ -1133,6 +1154,9 @@ namespace MarketWatch.Migrations
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -1233,7 +1257,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("UserName");
 
-                    b.ToTable("AbpUsers");
+                    b.ToTable("AbpUsers", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserClaim", b =>
@@ -1261,7 +1285,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AbpUserClaims");
+                    b.ToTable("AbpUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserLogin", b =>
@@ -1290,7 +1314,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("LoginProvider", "ProviderKey");
 
-                    b.ToTable("AbpUserLogins");
+                    b.ToTable("AbpUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserOrganizationUnit", b =>
@@ -1317,7 +1341,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("UserId", "OrganizationUnitId");
 
-                    b.ToTable("AbpUserOrganizationUnits");
+                    b.ToTable("AbpUserOrganizationUnits", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserRole", b =>
@@ -1336,7 +1360,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("RoleId", "UserId");
 
-                    b.ToTable("AbpUserRoles");
+                    b.ToTable("AbpUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserToken", b =>
@@ -1361,7 +1385,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AbpUserTokens");
+                    b.ToTable("AbpUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.OrganizationUnit", b =>
@@ -1434,7 +1458,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("AbpOrganizationUnits");
+                    b.ToTable("AbpOrganizationUnits", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.OrganizationUnitRole", b =>
@@ -1461,7 +1485,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("RoleId", "OrganizationUnitId");
 
-                    b.ToTable("AbpOrganizationUnitRoles");
+                    b.ToTable("AbpOrganizationUnitRoles", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResource", b =>
@@ -1535,7 +1559,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityServerApiResources");
+                    b.ToTable("IdentityServerApiResources", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResourceClaim", b =>
@@ -1549,7 +1573,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ApiResourceId", "Type");
 
-                    b.ToTable("IdentityServerApiResourceClaims");
+                    b.ToTable("IdentityServerApiResourceClaims", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResourceProperty", b =>
@@ -1567,7 +1591,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ApiResourceId", "Key", "Value");
 
-                    b.ToTable("IdentityServerApiResourceProperties");
+                    b.ToTable("IdentityServerApiResourceProperties", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResourceScope", b =>
@@ -1581,7 +1605,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ApiResourceId", "Scope");
 
-                    b.ToTable("IdentityServerApiResourceScopes");
+                    b.ToTable("IdentityServerApiResourceScopes", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResourceSecret", b =>
@@ -1606,7 +1630,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ApiResourceId", "Type", "Value");
 
-                    b.ToTable("IdentityServerApiResourceSecrets");
+                    b.ToTable("IdentityServerApiResourceSecrets", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiScopes.ApiScope", b =>
@@ -1682,7 +1706,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityServerApiScopes");
+                    b.ToTable("IdentityServerApiScopes", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiScopes.ApiScopeClaim", b =>
@@ -1696,7 +1720,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ApiScopeId", "Type");
 
-                    b.ToTable("IdentityServerApiScopeClaims");
+                    b.ToTable("IdentityServerApiScopeClaims", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiScopes.ApiScopeProperty", b =>
@@ -1714,7 +1738,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ApiScopeId", "Key", "Value");
 
-                    b.ToTable("IdentityServerApiScopeProperties");
+                    b.ToTable("IdentityServerApiScopeProperties", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.Client", b =>
@@ -1898,7 +1922,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("IdentityServerClients");
+                    b.ToTable("IdentityServerClients", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientClaim", b =>
@@ -1916,7 +1940,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "Type", "Value");
 
-                    b.ToTable("IdentityServerClientClaims");
+                    b.ToTable("IdentityServerClientClaims", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientCorsOrigin", b =>
@@ -1930,7 +1954,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "Origin");
 
-                    b.ToTable("IdentityServerClientCorsOrigins");
+                    b.ToTable("IdentityServerClientCorsOrigins", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientGrantType", b =>
@@ -1944,7 +1968,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "GrantType");
 
-                    b.ToTable("IdentityServerClientGrantTypes");
+                    b.ToTable("IdentityServerClientGrantTypes", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientIdPRestriction", b =>
@@ -1958,7 +1982,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "Provider");
 
-                    b.ToTable("IdentityServerClientIdPRestrictions");
+                    b.ToTable("IdentityServerClientIdPRestrictions", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientPostLogoutRedirectUri", b =>
@@ -1972,7 +1996,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "PostLogoutRedirectUri");
 
-                    b.ToTable("IdentityServerClientPostLogoutRedirectUris");
+                    b.ToTable("IdentityServerClientPostLogoutRedirectUris", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientProperty", b =>
@@ -1990,7 +2014,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "Key", "Value");
 
-                    b.ToTable("IdentityServerClientProperties");
+                    b.ToTable("IdentityServerClientProperties", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientRedirectUri", b =>
@@ -2004,7 +2028,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "RedirectUri");
 
-                    b.ToTable("IdentityServerClientRedirectUris");
+                    b.ToTable("IdentityServerClientRedirectUris", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientScope", b =>
@@ -2018,7 +2042,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "Scope");
 
-                    b.ToTable("IdentityServerClientScopes");
+                    b.ToTable("IdentityServerClientScopes", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientSecret", b =>
@@ -2043,7 +2067,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("ClientId", "Type", "Value");
 
-                    b.ToTable("IdentityServerClientSecrets");
+                    b.ToTable("IdentityServerClientSecrets", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Devices.DeviceFlowCodes", b =>
@@ -2115,7 +2139,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("UserCode");
 
-                    b.ToTable("IdentityServerDeviceFlowCodes");
+                    b.ToTable("IdentityServerDeviceFlowCodes", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.Grants.PersistedGrant", b =>
@@ -2181,7 +2205,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("SubjectId", "SessionId", "Type");
 
-                    b.ToTable("IdentityServerPersistedGrants");
+                    b.ToTable("IdentityServerPersistedGrants", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.IdentityResources.IdentityResource", b =>
@@ -2257,7 +2281,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityServerIdentityResources");
+                    b.ToTable("IdentityServerIdentityResources", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.IdentityResources.IdentityResourceClaim", b =>
@@ -2271,7 +2295,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("IdentityResourceId", "Type");
 
-                    b.ToTable("IdentityServerIdentityResourceClaims");
+                    b.ToTable("IdentityServerIdentityResourceClaims", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.IdentityServer.IdentityResources.IdentityResourceProperty", b =>
@@ -2289,7 +2313,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("IdentityResourceId", "Key", "Value");
 
-                    b.ToTable("IdentityServerIdentityResourceProperties");
+                    b.ToTable("IdentityServerIdentityResourceProperties", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.PermissionManagement.PermissionGrant", b =>
@@ -2319,9 +2343,11 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "ProviderName", "ProviderKey");
+                    b.HasIndex("TenantId", "Name", "ProviderName", "ProviderKey")
+                        .IsUnique()
+                        .HasFilter("[TenantId] IS NOT NULL");
 
-                    b.ToTable("AbpPermissionGrants");
+                    b.ToTable("AbpPermissionGrants", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.SettingManagement.Setting", b =>
@@ -2350,9 +2376,11 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "ProviderName", "ProviderKey");
+                    b.HasIndex("Name", "ProviderName", "ProviderKey")
+                        .IsUnique()
+                        .HasFilter("[ProviderName] IS NOT NULL AND [ProviderKey] IS NOT NULL");
 
-                    b.ToTable("AbpSettings");
+                    b.ToTable("AbpSettings", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.TenantManagement.Tenant", b =>
@@ -2409,7 +2437,7 @@ namespace MarketWatch.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("AbpTenants");
+                    b.ToTable("AbpTenants", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.TenantManagement.TenantConnectionString", b =>
@@ -2428,7 +2456,7 @@ namespace MarketWatch.Migrations
 
                     b.HasKey("TenantId", "Name");
 
-                    b.ToTable("AbpTenantConnectionStrings");
+                    b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
             modelBuilder.Entity("MarketWatch.Simulation.BacktestHistory", b =>
@@ -2436,8 +2464,8 @@ namespace MarketWatch.Migrations
                     b.HasOne("MarketWatch.Simulation.Strategy", "Strategy")
                         .WithMany("BacktestHistories")
                         .HasForeignKey("StrategyId")
-                        .HasConstraintName("FK_backtestHistory_strategy")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_backtestHistory_strategy");
 
                     b.Navigation("Strategy");
                 });
@@ -2447,18 +2475,29 @@ namespace MarketWatch.Migrations
                     b.HasOne("MarketWatch.Simulation.StockInfo", "CodeXNavigation")
                         .WithMany("CoefficientPairCodeXNavigations")
                         .HasForeignKey("CodeX")
-                        .HasConstraintName("FK_coefficient_pair_stockInfo")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_coefficient_pair_stockInfo");
 
                     b.HasOne("MarketWatch.Simulation.StockInfo", "CodeYNavigation")
                         .WithMany("CoefficientPairCodeYNavigations")
                         .HasForeignKey("CodeY")
-                        .HasConstraintName("FK_coefficient_pair_stockInfo1")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_coefficient_pair_stockInfo1");
 
                     b.Navigation("CodeXNavigation");
 
                     b.Navigation("CodeYNavigation");
+                });
+
+            modelBuilder.Entity("MarketWatch.Simulation.FundTradeHistory", b =>
+                {
+                    b.HasOne("MarketWatch.Simulation.FundStrategy", "Strategy")
+                        .WithMany("FundTradeHistory")
+                        .HasForeignKey("StrategyId")
+                        .IsRequired()
+                        .HasConstraintName("FK_tblFundTradeHistory_tblFundStrategy");
+
+                    b.Navigation("Strategy");
                 });
 
             modelBuilder.Entity("MarketWatch.Simulation.StockPrice", b =>
@@ -2466,8 +2505,8 @@ namespace MarketWatch.Migrations
                     b.HasOne("MarketWatch.Simulation.StockInfo", "CodeNavigation")
                         .WithMany("StockPrices")
                         .HasForeignKey("Code")
-                        .HasConstraintName("FK_stockPrice_stockInfo")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_stockPrice_stockInfo");
 
                     b.Navigation("CodeNavigation");
                 });
@@ -2477,21 +2516,10 @@ namespace MarketWatch.Migrations
                     b.HasOne("MarketWatch.Simulation.StockInfo", "CodeNavigation")
                         .WithMany("StockToAnalyses")
                         .HasForeignKey("Code")
-                        .HasConstraintName("FK_stockToAnalysis_stockInfo")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_stockToAnalysis_stockInfo");
 
                     b.Navigation("CodeNavigation");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.TblFundTradeHistory", b =>
-                {
-                    b.HasOne("MarketWatch.Simulation.TblFundStrategy", "Strategy")
-                        .WithMany("TblFundTradeHistories")
-                        .HasForeignKey("StrategyId")
-                        .HasConstraintName("FK_tblFundTradeHistory_tblFundStrategy")
-                        .IsRequired();
-
-                    b.Navigation("Strategy");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2771,6 +2799,11 @@ namespace MarketWatch.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MarketWatch.Simulation.FundStrategy", b =>
+                {
+                    b.Navigation("FundTradeHistory");
+                });
+
             modelBuilder.Entity("MarketWatch.Simulation.StockInfo", b =>
                 {
                     b.Navigation("CoefficientPairCodeXNavigations");
@@ -2785,11 +2818,6 @@ namespace MarketWatch.Migrations
             modelBuilder.Entity("MarketWatch.Simulation.Strategy", b =>
                 {
                     b.Navigation("BacktestHistories");
-                });
-
-            modelBuilder.Entity("MarketWatch.Simulation.TblFundStrategy", b =>
-                {
-                    b.Navigation("TblFundTradeHistories");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
