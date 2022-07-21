@@ -10,7 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MarketWatch.EntityFrameworkCore\MarketWatch.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\MarketWatch.TestBase\MarketWatch.TestBase.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.1.4" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.3.2" />
   </ItemGroup>
 
   <ItemGroup>
